@@ -10,10 +10,11 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     height = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(250)])
     handicap = serializers.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(28)])
+    sensor_id = serializers.CharField(max_length=25, required=True, validators=[UniqueValidator(queryset=Player.objects.all())])
 
     class Meta:
         model = Player
-        exclude = ['user']  # excluding the user field because it already papukated when the user instance was created
+        exclude = ['user']  # excluding the user field because it already populated when the user instance was created
 
 # class serializer that handel the data from user registration
 class RegisterSerializer(serializers.ModelSerializer):
@@ -42,6 +43,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(username=validated_data['email'], first_name=validated_data['first_name'], last_name=validated_data['last_name'], email=validated_data['email'])
         user.set_password(validated_data['password'])
         user.save()
+        user.player.sensor_id = player['sensor_id']
         user.player.height = player['height']
         user.player.handicap = player['handicap']
         user.player.save()

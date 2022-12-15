@@ -14,6 +14,7 @@ class Player(models.Model):
     # the match row in this table will automatically will be deleted)
     handicap = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(28)])
     height = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(250)])
+    sensor_id = models.CharField(unique=True, max_length=25, default="")  #the id of the sensor of the player must be unique
     registration_date = models.DateTimeField(default=datetime.now())
 
     #a listener that listen to the User model, if a new user as been save, it creates a new row in the player model with the new user in the user field
