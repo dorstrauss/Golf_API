@@ -24,3 +24,4 @@ class LoginView(ObtainAuthToken):
             'username': username,
             'token': token.key
         })
+
