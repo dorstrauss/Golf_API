@@ -133,3 +133,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [   # the permissions set that only a request with authorised token will be accepted
         'rest_framework.permissions.IsAuthenticated']
 }
+
+

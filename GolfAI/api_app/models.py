@@ -30,10 +30,13 @@ class Swing(models.Model):
 
     username = models.ForeignKey(User, on_delete=models.CASCADE)  # username is a foreign key of the model User
     time = models.DateTimeField(default=datetime.now())
+    x_velocity = models.FloatField(default=0)
+    y_velocity = models.FloatField(default=0)
+    z_velocity = models.FloatField(default=0)
     swing_speed = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(500)])
-    shaft = models.CharField(choices=[('STIFF','Stiff'), ('REGULAR','Regular'), ('FLEX', 'Flex')], max_length=7)
-    weight_in_grams = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5000)])
-    club_type = models.CharField(choices=[('WOOD','Wood'), ('IRON','Iron')], max_length=4)
+    #shaft = models.CharField(choices=[('STIFF','Stiff'), ('REGULAR','Regular'), ('FLEX', 'Flex')], max_length=7)
+    #weight_in_grams = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5000)])
+    #club_type = models.CharField(choices=[('WOOD','Wood'), ('IRON','Iron')], max_length=4)
 
     class Meta:
         constraints = [  # making the combination of username & time the model's primary key
