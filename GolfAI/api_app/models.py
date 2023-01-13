@@ -38,6 +38,9 @@ class Swing(models.Model):
     #weight_in_grams = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5000)])
     #club_type = models.CharField(choices=[('WOOD','Wood'), ('IRON','Iron')], max_length=4)
 
+    def __str__(self):
+        return str(self.username) + "  |  " + str(self.time)
+
     class Meta:
         constraints = [  # making the combination of username & time the model's primary key
             models.UniqueConstraint(

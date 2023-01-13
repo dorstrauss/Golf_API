@@ -14,15 +14,20 @@ class Point:
         x_difference = start_point.x - self.x
         y_difference = start_point.y - self.y
         z_difference = start_point.z - self.z
+        #print(f"x difference: {x_difference} y difference: {y_difference} z difference: {z_difference}")
 
-        x_velocity = x_difference/time_difference
+        time_difference = time_difference.total_seconds()  # converting the time difference from dateTime object to float
+        print(f"Time difference: {time_difference}")
+
+        x_velocity = x_difference / time_difference
         y_velocity = y_difference / time_difference
         z_velocity = z_difference / time_difference
 
         velocity = {'X_VELOCITY': x_velocity, 'Y_VELOCITY': y_velocity, 'Z_VELOCITY': z_velocity}
 
-        distance = math.sqrt(x_difference^2 + y_difference^2 + z_difference^2)  # calculating the distance between the points
-        max_speed = distance/time_difference
-        return velocity, max_speed
+        distance = math.sqrt(x_difference**2 + y_difference**2 + z_difference**2)  # calculating the distance between the points
+        print(f"Distance: {distance}")
+        speed = distance/time_difference
+        return velocity, speed
 
 

@@ -65,37 +65,43 @@ def handle_swing_massage(massage):
 
         if massage['NOTE'] == 'end':  # if this is the last message of this swing we call the function that run over the messages of the swing, calculate the speed and save it to the database
             analyze_swing_data(container, sensor_id)  # analyzing and saving the swing data
+            del temporary_swings_container[swing_id]  # deleting the swing data after analyzing it
 
 
-
+# function that gets the data of the swing, analyze the swings max speed,
+# velocity and save it to the database
 def analyze_swing_data(swing_data_container: {}, sensor_id: str):
     swing_max_speed = 0
     max_velocity_time = None
     previous_point = None  # flag to identify the first point in the loop
     previous_time = None
-    print("The swing dictionary is :", swing_data_container)
     for key in swing_data_container:  # going over the different positions and calculating the velocity in each one
         data = swing_data_container[key]
-        current_point = Point(data['X'],data['Y'],data['Z'])  # creating a 3-D point that represent the current point
+        current_point = Point(data['X'], data['Y'], data['Z'])  # creating a 3-D point that represent the current point
         if previous_point is None:  # if this is the first point
             previous_point = current_point
-            previous_time = datetime.strptime(data['TIME'], "%y-%m-%d %H:%M:%S")
+            previous_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f")
         else:  # if this not the first pont
-            current_time = datetime.strptime(data['TIME'], "%y-%m-%d %H:%M:%S")
+            current_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f")
             time_difference = current_time - previous_time
             current_velocity, current_speed = current_point.getVelocityAndSpeed(previous_point, time_difference)  # calculating the velocity between the current point and the previous point
+            print(f"Time: {current_time} Speed: {current_speed} Velocity: {current_velocity}")
             if swing_max_speed < current_speed:
                 swing_max_speed = current_speed
                 max_speed_velocity = current_velocity
                 max_velocity_time = data['TIME']
                 previous_point = current_point
                 previous_time = current_time
+            else:
+                previous_point = current_point
+                previous_time = current_time
 
     # saving tha swing analyzed data to the database
-    swing_username = Player.objects.filter(sensor_id=sensor_id).username
-    x_velocity = max_speed_velocity['X']
-    y_velocity = max_speed_velocity['Y']
-    z_velocity = max_speed_velocity['Z']
+    swing_username = Player.objects.filter(sensor_id=sensor_id).first().user
+
+    x_velocity = max_speed_velocity['X_VELOCITY']
+    y_velocity = max_speed_velocity['Y_VELOCITY']
+    z_velocity = max_speed_velocity['Z_VELOCITY']
 
     swing = Swing(username=swing_username, time=max_velocity_time, x_velocity=x_velocity, y_velocity=y_velocity, z_velocity=z_velocity, swing_speed=swing_max_speed)
     swing.save()
