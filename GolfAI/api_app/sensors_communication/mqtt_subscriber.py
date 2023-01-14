@@ -80,12 +80,12 @@ def analyze_swing_data(swing_data_container: {}, sensor_id: str):
         current_point = Point(data['X'], data['Y'], data['Z'])  # creating a 3-D point that represent the current point
         if previous_point is None:  # if this is the first point
             previous_point = current_point
-            previous_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f")
+            previous_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f%z")
         else:  # if this not the first pont
-            current_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f")
+            current_time = datetime.strptime(data['TIME'], "%Y-%m-%d %H:%M:%S.%f%z")
             time_difference = current_time - previous_time
             current_velocity, current_speed = current_point.getVelocityAndSpeed(previous_point, time_difference)  # calculating the velocity between the current point and the previous point
-            print(f"Time: {current_time} Speed: {current_speed} Velocity: {current_velocity}")
+
             if swing_max_speed < current_speed:
                 swing_max_speed = current_speed
                 max_speed_velocity = current_velocity
