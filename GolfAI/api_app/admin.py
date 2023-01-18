@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Player, Swing
+
+from api_app.models import Player, Swing
 
 # Register your models here.
 admin.site.register(Player)

@@ -1,6 +1,7 @@
 from django.test import TestCase
-from api_app.sensors_communication.point import Point
 from datetime import datetime
+
+from api_app.sensors_communication.point import Point
 
 point1 = Point(x=-0.3748147,y=-1.049886,z=-1.795301)
 time1 = datetime.strptime("2022-12-19 07:13:02.16", "%Y-%m-%d %H:%M:%S.%f")

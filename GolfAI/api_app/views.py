@@ -1,10 +1,12 @@
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import permissions
 from rest_framework import generics
-from .serializers import *
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 
-# Create your views here.
+from models import User
+from api_app.serializers import RegisterSerializer
+
 class RegistrationView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]  #the client interact with this view before he been authorizied, so we need to say specificaly that this view is for everyone
     queryset = User.objects.all()

@@ -1,7 +1,6 @@
-# class that represent a 3-D point
 import math
 
-
+# class that represent a 3-D point
 class Point:
 
     def __init__(self, x, y, z):  # constructor
@@ -9,7 +8,7 @@ class Point:
         self.y = y
         self.z = z
 
-    # function that calculate the velocity between this point and the point we got as a argument and return the velocity vector
+    # function that calculate the velocity and speed between this point and the point we got as a argument and return the velocity vector and the speed
     def getVelocityAndSpeed(self, start_point, time_difference):
         x_difference = start_point.x - self.x
         y_difference = start_point.y - self.y

@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('golf-api/', include('api_app.urls'))  # whenever a user type 'golf-api' in the address it will include the urls.py file that sits inside the api_app directoryx
+    path('golf-api/', include('api_app.urls'))  # whenever a user type 'golf-api' in the address it will include the urls.py file that sits inside the api_app directory
 ]

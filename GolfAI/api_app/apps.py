@@ -1,8 +1,4 @@
 from django.apps import AppConfig
-#from api_app.sensors_communication.mqtt_subscriber import start_listening
-#import threading
-
-
 
 class ApiAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

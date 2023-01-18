@@ -1,13 +1,14 @@
 from datetime import datetime
 import time
+import queue
+
 import json
 from paho.mqtt import client
-import queue
+
 from api_app.models import Player, Swing
-from .point import Point
+from api_app.sensors_communication.point import Point
 
 messages_queue = queue.Queue()  # the queue that the coming messages will be inserted to
-#queue_lock = threading.Lock()  # creating a lock for the queue
 messages_checking_interval = 0.5  #the interval which we check the messages queue
 temporary_swings_container = {}  # declaring the dict that will hold the dictionaries position data of each swing (dictionary of dictionaries)
 
@@ -66,6 +67,8 @@ def handle_swing_massage(massage):
         if massage['NOTE'] == 'end':  # if this is the last message of this swing we call the function that run over the messages of the swing, calculate the speed and save it to the database
             analyze_swing_data(container, sensor_id)  # analyzing and saving the swing data
             del temporary_swings_container[swing_id]  # deleting the swing data after analyzing it
+    else:
+        print(f"Sensor {sensor_id} is not register in the database!")
 
 
 # function that gets the data of the swing, analyze the swings max speed,

@@ -1,14 +1,16 @@
-import json
-import time
-from paho.mqtt import client
 import threading
+import time
+
+import json
+from paho.mqtt import client
 
 
+# function that gets a sensor id and a swing id and simulate a full swing from this sensor
 def sensor_simulate(sensor_id, swing_id):
 
     mqtt_broker = "mqtt.eclipseprojects.io"  # the address of our broker
-    receiver = client.Client(f"demo_sensor{sensor_id}")  # creating the subscriber client
-    receiver.connect(mqtt_broker)
+    receiver = client.Client(f"demo_sensor:{sensor_id}")  # creating the subscriber client
+    receiver.connect(mqtt_broker)  # connecting to the broker
     
     # swing data example
     position_data = {'NOTE': '', 'SENSOR_ID': sensor_id, 'SWING_ID': swing_id, "X": -0.3748672, "Y": -1.05, "Z": -1.795133,

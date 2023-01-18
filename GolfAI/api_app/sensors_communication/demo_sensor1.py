@@ -1,9 +1,7 @@
-import json
 import time
+
 from paho.mqtt import client
-from random import uniform
-from datetime import datetime
-from json import dumps
+import json
 
 mqtt_broker = "mqtt.eclipseprojects.io"  # the address of our broker
 receiver = client.Client("demo_sensor")  # creating the subscriber client

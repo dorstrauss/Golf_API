@@ -1,10 +1,11 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import MaxValueValidator, MinValueValidator
-from .models import Player
 from rest_framework.authtoken.models import Token
+from rest_framework import serializers
+
+from api_app.models import Player
 
 class PlayerSerializer(serializers.ModelSerializer):
 
@@ -15,6 +16,7 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         exclude = ['user']  # excluding the user field because it already populated when the user instance was created
+
 
 # class serializer that handel the data from user registration
 class RegisterSerializer(serializers.ModelSerializer):
