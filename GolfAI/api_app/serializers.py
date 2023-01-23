@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
-from api_app.models import Player
+from api_app.models import Player, Swing
 
 class PlayerSerializer(serializers.ModelSerializer):
 
@@ -52,4 +52,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         token = Token.objects.create(user=user)  # creating a unique token for that user to use when he is signing in
         token.save()  # saving the token to the database
         return user
+
+
+# the swings serializer that gets a queryset object from the Swing model and make to readable data
+class SwingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Swing
+        fields = '__all__'
+
 

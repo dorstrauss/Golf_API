@@ -1,15 +1,16 @@
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.views import APIView
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
-from models import User
-from api_app.serializers import RegisterSerializer
+from api_app.models import User, Swing
+from api_app.serializers import RegisterSerializer, SwingsSerializer
 
 class RegistrationView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]  #the client interact with this view before he been authorizied, so we need to say specificaly that this view is for everyone
-    queryset = User.objects.all()
+    queryset = User.objects.all()  # all the relevant data from the database that we are going to work with
     serializer_class = RegisterSerializer
 
 class LoginView(ObtainAuthToken):
@@ -27,3 +28,13 @@ class LoginView(ObtainAuthToken):
             'token': token.key
         })
 
+
+# the view that will get username and it's token and will return a list of all the swings of the user
+class GetSwingsView(APIView):
+    
+    permission_classes = [permissions.IsAuthenticated]  # using the built-in IsAuthenticated class that gets the token assosiated with the user
+
+    def get(self, request):
+        swings = Swing.objects.filter(username=request.user)  # getting the user's swings from the database (the IsAuthenticated class provide the user with the assosiated token we got)
+        serialized_swings = SwingsSerializer(swings, many=True)  # passing the swings queryset to the serializer, and configaring the serializer to handel a queryset of multiple objects
+        return Response(serialized_swings.data)
