@@ -21,4 +21,6 @@ Our mission is to develop a low-cost kit that will drastically increase players 
 ## Structure
 Inside the "Golf_API" directory there is a directory called "GolfAI" this is the main project directory. Inside this directory there are two importent directories, "api_app" which is the app for all the API functionality, and "GolfAI" which is the django project directory.
 
+![image](https://user-images.githubusercontent.com/97314875/215344898-22b7b3da-0743-419d-9397-729cdda8c4c7.png)
+
 
